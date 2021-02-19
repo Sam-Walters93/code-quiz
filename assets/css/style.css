@@ -1,0 +1,118 @@
+/* UNIVERSAL STYLING */
+*{
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 40px;
+    font-weight: lighter;
+    font-style: italic;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    font-size: 44px;
+    color: ;
+    transition: 00.3s;
+}
+
+a:visited {
+    color: black;
+}
+
+
+
+.container {
+    display: flex;
+    flex: wrap;
+    justify-content: space-between;
+    align-items: center;
+    border: solid black 2px;
+}
+
+header {
+    display: flex;
+    width: 100%;
+    height: auto;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+}
+
+#title {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 80px;
+    font-weight: bold;
+    flex: 1 0 100%;
+    margin: 0 auto; 
+    text-align:  center;
+}
+
+.header-content {
+    margin: 5px 25px;
+    font-size: 40px;    
+}
+
+#big-box {
+    margin: 15px auto;
+    width: 40%;
+    height: fit-content;
+    flex-direction: column;
+    border:black 1px solid;
+    justify-content: flex-start;
+    
+}
+
+#holder {
+    height: 10%;
+    min-height: fit-content;
+    width: 80%;
+    min-width: fit-content;
+    margin: 15px auto 5px;
+    justify-content: flex-start;
+    padding-left: 10px;
+}
+
+#answer-holder {
+    height: fit-content;
+    width: 80%; 
+    margin: 15px auto 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+} 
+
+.answer-btn {
+    width: 400px;
+    min-width: 250px;
+    height: 40px;
+    margin: 5px 50% 5px 30%;
+    text-align: center;
+    outline: none;
+    border-radius: 15px;
+    background-color: rgb(95, 59, 125);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.answer-btn:hover {
+    background-color: rgb(230, 136, 235);
+    width: 420px;
+    height: 45px;
+}
+
+
+
+
+
+
+
+
+
