@@ -17,15 +17,12 @@ a {
 
 a:hover {
     font-size: 44px;
-    color: ;
     transition: 00.3s;
 }
 
 a:visited {
     color: black;
 }
-
-
 
 .container {
     display: flex;
