@@ -1,7 +1,8 @@
 
-var timer = 15;
-var i = 0;
 var answer = '';
+score = 0;
+questionText = document.getElementsByTagName("span").innerHTML;
+reps = 75;
 
 //created an array of objects containing questions, options, and answers
 var questions = [
@@ -70,48 +71,62 @@ options: ['a. x','b. *','c. =', 'd. --'], answer: 'c'},
 options: ['a. true','b. false','c. NaN', 'd. throw an error'], answer: 'a'},
 ];
 
-
 window.onload = function() {
     newQuestion();
     countDown();
-}
-
+};
 
 function countDown() {
+    timer = 75
+    var stopwatch = setInterval(function(){
+        
+        if (timer < 11) {
+            document.getElementById("count").innerHTML = '<span id="count" style="color: red;">' + timer + '</span>';
+        }
+        console.log(timer)
+        if (timer === 0) {  
+            clearInterval(stopwatch); 
+            endGame();
+        } else {
+            document.getElementById("count").innerText = timer;
+        }
+        timer--;
+        return reps --
+    }, 1000)
 
-    if (timer < 0) {
-        setInterval(function(){
-            if (timer < 11) {
-                document.getElementById("count").innerHTML = '<span id="count" style="color: red;">' + timer + '</span>';
-            }
-            else {
-                document.getElementById("count").innerText = timer;
-            }
-            timer--;
-        }, 1000)
+    if (reps === 0) {
+        clearInterval(stopwatch)
     }
 
-    else {
-        clearInterval(countDown);
-        endGame();
-    }
 };
 
 
 function newQuestion() {
-    questionText = document.getElementsByTagName("span").innerHTML;
 
-    var question = questions[i].question;
-    var options = questions[i].options;
-    var answerLetter = questions[i].answer;
+    if (questions.length === 0) {
+        endGame();
+    }
+   
+    document.getElementById("answer-holder").innerHTML='';
+    
+    var index = Math.floor(Math.random() * questions.length);
+    var question = questions[index].question;
+    var options = questions[index].options;
+    var answerLetter = questions[index].answer;
+
+    questions.splice(index, 1);
+  
 
     document.getElementById("question").innerText = question;
     
     for (var j = 0; j < options.length; j++) {
-        document.getElementById(j).innerText = options[j];
-    };
+        // document.getElementById(j).innerText = options[j];
 
-    i++
+        var button = document.createElement("button");
+        button.className = "answer-btn";
+        button.innerText = options[j];
+        document.getElementById("answer-holder").appendChild(button);
+    };
     answer = answerLetter;
 };
 
@@ -124,8 +139,8 @@ function checkAnswer(answer, userAnswer) {
             document.getElementById('results').innerHTML = '';
         }, 3000);
 
-        // score++; //havent nailed down scoring system 
-        
+        score += 2;
+
         newQuestion();
     } else {
         document.getElementById('results').innerHTML = '<p id="results" style="color: red;">' + "WRONG-O!" + '</p>';
@@ -135,27 +150,32 @@ function checkAnswer(answer, userAnswer) {
         }, 3000);
 
         // score--;
-
-        newQuestion();
         timer -= 5;
+        newQuestion();
     }
-} 
+};
 
+function endGame() {
+    clearInterval(countDown())
+    
+    var timer = document.getElementById("count").innerText;
+    score += timer;
+
+    var bigBox = document.getElementById('big-box');
+    bigBox.className = 'scoreInput';
+    bigBox.innerHTML = '';
+    console.log('hoes');
+};
 
 //events and buttons
-
-//LOL this will NOT work 
 var answerHolder = document.getElementById("answer-holder");
 
 answerHolder.addEventListener('click', function() {
+
     var textAnswer = event.target.innerHTML;  
     var userAnswer = textAnswer[0];
 
-    console.log(userAnswer)
-    console.log (answer)
-
     checkAnswer(answer, userAnswer);
-   
 });
 
 
