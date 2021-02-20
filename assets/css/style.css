@@ -29,7 +29,7 @@ a:visited {
     flex: wrap;
     justify-content: space-between;
     align-items: center;
-    border: solid black 2px;
+   
 }
 
 header {
@@ -58,10 +58,10 @@ header {
 
 #big-box {
     margin: 15px auto;
-    width: 40%;
+    width: 100%;
     height: fit-content;
     flex-direction: column;
-    border:black 1px solid;
+  
     justify-content: flex-start;
     
 }
@@ -69,9 +69,8 @@ header {
 #holder {
     height: 10%;
     min-height: fit-content;
-    width: 80%;
-    min-width: fit-content;
-    margin: 15px auto 5px;
+    width: 60%;
+    margin: 15px auto 50px;
     justify-content: flex-start;
     padding-left: 10px;
 }
@@ -97,12 +96,18 @@ header {
     background-color: rgb(95, 59, 125);
     cursor: pointer;
     transition: 0.3s;
+    
 }
 
 .answer-btn:hover {
     background-color: rgb(230, 136, 235);
     width: 420px;
     height: 45px;
+}
+
+#question {
+    font-size: 28px;
+    font-family: sans-serif;
 }
 
 

@@ -1,16 +1,14 @@
 
-var timer = 75;
-
-
-
-
+var timer = 15;
+var i = 0;
+var answer = '';
 
 //created an array of objects containing questions, options, and answers
 var questions = [
 {question: "Inside which HTML element do we put the JavaScript?",
-options: ['a. <javascript>','b. <scripting>','c. <script>', 'd. <js>'],
-answer: 'a'}, 
-{question: "What is the correct JavaScript syntax to change the content of the HTML element below\? <br><p id= demo>This is a demonstration.</p>",
+options: ['a. javascript','b. scripting','c. script', 'd. js'],
+answer: 'c'}, 
+{question: "What is the correct JavaScript syntax to change the content of the HTML element below\? <p id= demo>This is a demonstration.</p>",
 options: ['a. #demo.innerHTML = "Hello World"','b. document.getElementByName("p").innerHTML', 'c. document.getElementById("demo").innerHTML = "Hello World"', 'd. document.getElement("p").innerHTML = "Hello World"'],
 answer: 'c'}, 
 {question: "Where is the correct place to insert a JavaScript?",
@@ -72,50 +70,71 @@ options: ['a. x','b. *','c. =', 'd. --'], answer: 'c'},
 options: ['a. true','b. false','c. NaN', 'd. throw an error'], answer: 'a'},
 ];
 
-function initiate() {
+
+window.onload = function() {
     newQuestion();
     countDown();
-};
+}
 
-var countDown = setInterval(function(timer){
-    if(timer <= 0){
-      clearInterval(countDown);
+
+function countDown() {
+
+    if (timer < 0) {
+        setInterval(function(){
+            if (timer < 11) {
+                document.getElementById("count").innerHTML = '<span id="count" style="color: red;">' + timer + '</span>';
+            }
+            else {
+                document.getElementById("count").innerText = timer;
+            }
+            timer--;
+        }, 1000)
     }
-    document.getElementById("count").value = 75 - timer;
-    timer -= 1;
-}, 1000);
+
+    else {
+        clearInterval(countDown);
+        endGame();
+    }
+};
 
 
 function newQuestion() {
+    questionText = document.getElementsByTagName("span").innerHTML;
 
-    for (var i = 0; i < questions.length; i++) {
-        var question = questions[i].question;
-        var options = questions[i].options;
-        var answer = questions[i].answer;
+    var question = questions[i].question;
+    var options = questions[i].options;
+    var answerLetter = questions[i].answer;
 
-        console.log(question, options, answer);
+    document.getElementById("question").innerText = question;
+    
+    for (var j = 0; j < options.length; j++) {
+        document.getElementById(j).innerText = options[j];
+    };
 
-        document.getElementById('question').innerHTML = question;
-        
-        for (var j = 0; j < options.length; j++) {
-            document.getElementById('btn' += (j + 1).toString).innerHTML = options[j];
-        };
-
-        checkAnswer(answer);
-    }
+    i++
+    answer = answerLetter;
 };
 
 function checkAnswer(answer, userAnswer) {
+  
     if (answer === userAnswer) {
-        document.getElementById('results').innerHTML = "CORRECT!";
+        document.getElementById('results').innerHTML = '<p id="results" style="color: green;">' + "CORRECT" + '</p>';
 
-        score++; //havent nailed down scoring system 
+        setTimeout(function() {
+            document.getElementById('results').innerHTML = '';
+        }, 3000);
+
+        // score++; //havent nailed down scoring system 
         
         newQuestion();
     } else {
-        document.getElementById('results').innerHTML = "WRONG-O!";
+        document.getElementById('results').innerHTML = '<p id="results" style="color: red;">' + "WRONG-O!" + '</p>';
 
-        score--;
+        setTimeout(function() {
+            document.getElementById('results').innerHTML = '';
+        }, 3000);
+
+        // score--;
 
         newQuestion();
         timer -= 5;
@@ -125,11 +144,20 @@ function checkAnswer(answer, userAnswer) {
 
 //events and buttons
 
-//start button on welcome page
-document.getElementById("start-btn").addEventListener('click', initiate());
-
 //LOL this will NOT work 
-var userAnswer = document.getElementsByClassName("answer-btn").addEventListener('click').innerHTML[0];
+var answerHolder = document.getElementById("answer-holder");
+
+answerHolder.addEventListener('click', function() {
+    var textAnswer = event.target.innerHTML;  
+    var userAnswer = textAnswer[0];
+
+    console.log(userAnswer)
+    console.log (answer)
+
+    checkAnswer(answer, userAnswer);
+   
+});
+
 
 
 
