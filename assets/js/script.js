@@ -2,7 +2,7 @@
 var answer = '';
 score = 0;
 questionText = document.getElementsByTagName("span").innerHTML;
-reps = 75;
+reps = 100;
 
 //created an array of objects containing questions, options, and answers
 var questions = [
@@ -77,14 +77,13 @@ window.onload = function() {
 };
 
 function countDown() {
-    timer = 75
+    timer = 100
     var stopwatch = setInterval(function(){
         
         if (timer < 11) {
             document.getElementById("count").innerHTML = '<span id="count" style="color: red;">' + timer + '</span>';
         }
-        console.log(timer)
-        if (timer === 0) {  
+        if (timer <= 0) {  
             clearInterval(stopwatch); 
             endGame();
         } else {
@@ -102,8 +101,9 @@ function countDown() {
 
 
 function newQuestion() {
-
+    endGame();
     if (questions.length === 0) {
+        reps = 0;
         endGame();
     }
    
@@ -156,15 +156,20 @@ function checkAnswer(answer, userAnswer) {
 };
 
 function endGame() {
-    clearInterval(countDown())
+   
     
     var timer = document.getElementById("count").innerText;
+    timer = parseInt(timer);
+    score = parseInt(score);
     score += timer;
+
+    var highTitle = document.createElement('div');
+
+
 
     var bigBox = document.getElementById('big-box');
     bigBox.className = 'scoreInput';
-    bigBox.innerHTML = '';
-    console.log('hoes');
+    // bigBox.innerHTML = '';
 };
 
 //events and buttons
