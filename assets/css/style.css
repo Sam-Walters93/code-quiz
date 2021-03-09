@@ -30,7 +30,6 @@ a:visited {
     flex: wrap;
     justify-content: space-between;
     align-items: center;
-   
 }
 
 header {
@@ -127,12 +126,3 @@ header {
     height: 100%;
     z-index: 1;
 }
-
-
-
-
-
-
-
-
-

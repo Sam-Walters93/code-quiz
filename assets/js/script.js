@@ -1,7 +1,14 @@
 
+//empty string var to hold user inputted answer to check 
 var answer = '';
+
+//final score variable
 score = 0;
+
+//
 questionText = document.getElementsByTagName("span").innerHTML;
+
+//var to break countDown function. Must match Timer var. 
 reps = 100;
 
 //created an array of objects containing questions, options, and answers
@@ -71,125 +78,168 @@ options: ['a. x','b. *','c. =', 'd. --'], answer: 'c'},
 options: ['a. true','b. false','c. NaN', 'd. throw an error'], answer: 'a'},
 ];
 
+//after user clicks on homepage start button, new question is loaded and timer started
 window.onload = function() {
     newQuestion();
     countDown();
 };
 
+//countdow timer function
 function countDown() {
+    //seconds for countdown timer, can be set to any non negative integer
     timer = 100
+
+    //set variable to function for stoppage purposes
     var stopwatch = setInterval(function(){
         
+        //once timer get below 11 the integer appears red to alert the user
         if (timer < 11) {
             document.getElementById("count").innerHTML = '<span id="count" style="color: red;">' + timer + '</span>';
         }
+        //if the timer runs out, runs final functions
         if (timer <= 0) {  
             clearInterval(stopwatch); 
             endGame();
         } else {
             document.getElementById("count").innerText = timer;
         }
+        //decrease timer and reps vars
         timer--;
         return reps --
     }, 1000)
 
+    //once reps(and timer) are 0, break set interval function
     if (reps === 0) {
         clearInterval(stopwatch)
     }
-
 };
 
-
+//question for appending questions to page 
 function newQuestion() {
-    endGame();
+    console.log("QUESTION ARRAY LENGTH:" + questions.length);
+    
+    //check if questions array is now empty. Run end game func if so 
     if (questions.length === 0) {
         reps = 0;
         endGame();
     }
-   
+
+    //access html div for answers and empty it
     document.getElementById("answer-holder").innerHTML='';
-    
+
+    //create random index var so questions are randomized 
     var index = Math.floor(Math.random() * questions.length);
+
+    //access the question from the original object 
     var question = questions[index].question;
+
+    //set a var to the array of answer options to iterate over
     var options = questions[index].options;
+
+    //set var to the correct answer's letter assignment to compare against user's input
     var answerLetter = questions[index].answer;
 
+    //remove the used question from the array
     questions.splice(index, 1);
   
-
+    //set text on page to queation variable
     document.getElementById("question").innerText = question;
-    
-    for (var j = 0; j < options.length; j++) {
-        // document.getElementById(j).innerText = options[j];
 
+    //iterate over the options array     
+    for (var j = 0; j < options.length; j++) {
+        
+        //create HTML button
         var button = document.createElement("button");
+        //set button's class for styling
         button.className = "answer-btn";
+        //set button text to iterate option text
         button.innerText = options[j];
+        //append button to answer containing div 
         document.getElementById("answer-holder").appendChild(button);
     };
+    //set outside answer var to correct answer of current question
     answer = answerLetter;
 };
 
+//function for checking User's answer and adjusting score 
 function checkAnswer(answer, userAnswer) {
-  
+
+    //if question array is empty, run final function 
+    if (questions.length === 0) {
+        endGame();
+    }
+
+    //compare user input to correct answer. If correct
     if (answer === userAnswer) {
+        //set currently non existent result text to 'Correct' colored green
         document.getElementById('results').innerHTML = '<p id="results" style="color: green;">' + "CORRECT" + '</p>';
 
+        //after 3 seconds set result div text to nothing, removing the 'correct' 
         setTimeout(function() {
             document.getElementById('results').innerHTML = '';
         }, 3000);
 
+        //adjust score to 2 points higher 
         score += 2;
 
+        //append new question to screen
         newQuestion();
     } else {
+        //same as above, but text is "WRONG-O!" and is styled red
         document.getElementById('results').innerHTML = '<p id="results" style="color: red;">' + "WRONG-O!" + '</p>';
 
         setTimeout(function() {
             document.getElementById('results').innerHTML = '';
         }, 3000);
 
-        // score--;
+        //remove 5 seconds from timer as penalty 
         timer -= 5;
+        
+        //append new question to screen
         newQuestion();
     }
 };
 
+//final function for displaying score 
 function endGame() {
-   
-    
+    //access current timer text 
     var timer = document.getElementById("count").innerText;
+
+    //change text of timer and score to integers, and add 
     timer = parseInt(timer);
     score = parseInt(score);
     score += timer;
 
+    //access main container 
+    var bigBox = document.getElementById('big-box');
+
+    //change class of main container for styling purposes 
+    bigBox.className = 'scoreInput';
+
+    //clear div of content
+    bigBox.innerHTML = '';
+
+
+
+
+
     var highTitle = document.createElement('div');
 
-
-
-    var bigBox = document.getElementById('big-box');
-    bigBox.className = 'scoreInput';
-    // bigBox.innerHTML = '';
+  
 };
 
 //events and buttons
+
+
+//access answer option container div
 var answerHolder = document.getElementById("answer-holder");
 
+//set event listener to click
 answerHolder.addEventListener('click', function() {
-
+    //access text of user chosen option 
     var textAnswer = event.target.innerHTML;  
+    //set variable to first letter of option (a, b, c, or d)
     var userAnswer = textAnswer[0];
-
+    //run answer checking function\
     checkAnswer(answer, userAnswer);
 });
-
-
-
-
-
- 
-
-
-
-    
-
