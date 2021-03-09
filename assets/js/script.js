@@ -203,32 +203,76 @@ function checkAnswer(answer, userAnswer) {
 //final function for displaying score 
 function endGame() {
     //access current timer text 
-    var timer = document.getElementById("count").innerText;
-
-    //change text of timer and score to integers, and add 
-    timer = parseInt(timer);
+    var timeScore = document.getElementById("count").innerText;
+    timer = 0;
+    
+    //change text of timeScore and score to integers, and add 
+    timeScore = parseInt(timeScore);
     score = parseInt(score);
-    score += timer;
+    score += timeScore;
 
     //access main container 
     var bigBox = document.getElementById('big-box');
 
-    //change class of main container for styling purposes 
-    bigBox.className = 'scoreInput';
-
     //clear div of content
+    bigBox.innerHTML = "<h1 id='question' style='text-decoration: underline'> Score </h1";
+
+    //create score text 
+    var scoreDisplay = document.createElement("h1");
+    scoreDisplay.className = 'header-content';
+    scoreDisplay.innerText = score;
+
+    //create input field
+    var usernameInput = document.createElement("div");
+    usernameInput.innerHTML = "<h3>UserName: <input id='scoreUsername'></input></h3>"
+   
+
+    //create submit button that will save info to local storage 
+    var scoreSubmit = document.createElement("button");
+    scoreSubmit.id = "scoreSubmit";
+    scoreSubmit.innerText = 'Submit';
+    scoreSubmit.className = "submit-btn";
+
+
+    //append all to score container div 
+    document.getElementById("big-box").appendChild(scoreDisplay);
+    document.getElementById("big-box").appendChild(usernameInput);
+    document.getElementById("big-box").appendChild(scoreSubmit);
+};
+
+function displayHighScores() {
+    var bigBox = document.getElementById('big-box');
+
     bigBox.innerHTML = '';
+    
+    bigBox.innerHTML = "<h1 id='question' style='text-decoration: underline'> HIGH SCORES </h1";
 
 
 
 
-
-    var highTitle = document.createElement('div');
-
-  
 };
 
 //events and buttons
+
+//set variable to score display submit button and add event listener
+document.addEventListener( "click", someListener );
+
+function someListener(event){
+    var element = event.target;
+    if(element.id === 'scoreSubmit'){
+        var userName = document.getElementById("scoreUsername").value;
+
+        let logScores = JSON.parse(localStorage.getItem("yourScores")) || [];
+
+        var scoreObj = {'userName': userName, 'Score': score};
+
+        logScores.push(scoreObj);
+
+        localStorage.setItem("yourScores", JSON.stringify(logScores))
+
+        displayHighScores();
+    }
+};
 
 
 //access answer option container div
@@ -243,3 +287,4 @@ answerHolder.addEventListener('click', function() {
     //run answer checking function\
     checkAnswer(answer, userAnswer);
 });
+
