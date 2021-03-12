@@ -1,5 +1,5 @@
 
-//empty string var to hold user inputted answer to check 
+//empty string var to hold user inputted answer
 var answer = '';
 
 //final score variable
@@ -84,7 +84,7 @@ window.onload = function() {
     countDown();
 };
 
-//countdow timer function
+//countdown timer function
 function countDown() {
     //seconds for countdown timer, can be set to any non negative integer
     timer = 100
@@ -241,28 +241,43 @@ function endGame() {
 };
 
 function displayHighScores() {
+
+    let logScores = JSON.parse(localStorage.getItem("yourScores"));
+
     var bigBox = document.getElementById('big-box');
 
     bigBox.innerHTML = '';
     
     bigBox.innerHTML = "<h1 id='question' style='text-decoration: underline'> HIGH SCORES </h1";
 
+    for (var i = 0; i < logScores.length; i++) {
 
+        var scoreDiv = document.createElement('h2');
 
+        scoreDiv.innerText = logScores[i].userName + ': ' + logScores[i].Score; 
 
+        bigBox.appendChild(scoreDiv);
+    }
 };
 
 //events and buttons
 
+var highScoreBtn = document.getElementById('high-score');
+
+highScoreBtn.addEventListener('click', displayHighScores);
+
 //set variable to score display submit button and add event listener
 document.addEventListener( "click", someListener );
 
+//once username is submitted, high scores will be displayed
 function someListener(event){
     var element = event.target;
     if(element.id === 'scoreSubmit'){
         var userName = document.getElementById("scoreUsername").value;
 
         let logScores = JSON.parse(localStorage.getItem("yourScores")) || [];
+
+        console.log(logScores);
 
         var scoreObj = {'userName': userName, 'Score': score};
 
@@ -274,11 +289,10 @@ function someListener(event){
     }
 };
 
-
 //access answer option container div
 var answerHolder = document.getElementById("answer-holder");
 
-//set event listener to click
+//on click, retrieves user answer and runs checkAnswer function
 answerHolder.addEventListener('click', function() {
     //access text of user chosen option 
     var textAnswer = event.target.innerHTML;  
