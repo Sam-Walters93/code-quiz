@@ -7,4 +7,4 @@ https://sam-walters93.github.io/code-quiz/
 Happy Learning!
 
 
-*This application was built using HTML, CSS, JS, and DOM manipulation 
+*This application was built using HTML, CSS, JS, and DOM manipulation*
