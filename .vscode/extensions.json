@@ -1,8 +1,0 @@
-{
-    "recommendations": [
-        "coenraads.bracket-pair-colorizer",
-        "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
-        "chakrounanas.turbo-console-log"
-    ]
-}
