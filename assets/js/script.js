@@ -115,9 +115,7 @@ function countDown() {
 };
 
 //question for appending questions to page 
-function newQuestion() {
-    console.log("QUESTION ARRAY LENGTH:" + questions.length);
-    
+function newQuestion() {    
     //check if questions array is now empty. Run end game func if so 
     if (questions.length === 0) {
         reps = 0;
@@ -178,7 +176,7 @@ function checkAnswer(answer, userAnswer) {
         setTimeout(function() {
             document.getElementById('results').innerHTML = '';
         }, 3000);
-
+        
         //adjust score to 2 points higher 
         score += 2;
 
@@ -255,19 +253,23 @@ function displayHighScores() {
         var scoreDiv = document.createElement('h2');
 
         scoreDiv.innerText = logScores[i].userName + ': ' + logScores[i].Score; 
-
         bigBox.appendChild(scoreDiv);
     }
+
+    var retryBtn = document.createElement('button');
+    retryBtn.innerText = "Retry?"
+    retryBtn.className = 'answer-btn';
+    retryBtn.id = 'retry'
+    bigBox.appendChild(retryBtn);
 };
 
 //events and buttons
-
 var highScoreBtn = document.getElementById('high-score');
 
 highScoreBtn.addEventListener('click', displayHighScores);
 
 //set variable to score display submit button and add event listener
-document.addEventListener( "click", someListener );
+document.addEventListener( "click", someListener);
 
 //once username is submitted, high scores will be displayed
 function someListener(event){
@@ -287,6 +289,11 @@ function someListener(event){
 
         displayHighScores();
     }
+
+    if(element.id === 'retry'){
+      
+        window.location.reload()
+    }
 };
 
 //access answer option container div
@@ -301,4 +308,3 @@ answerHolder.addEventListener('click', function() {
     //run answer checking function\
     checkAnswer(answer, userAnswer);
 });
-
